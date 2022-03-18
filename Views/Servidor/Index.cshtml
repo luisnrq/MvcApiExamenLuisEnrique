@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MvcApiExamenLuisEnrique.Models.Serie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Crear Nueva Serie</a>|
+    <a asp-action="CreatePersonajeSerie">Crear Personaje</a> |
+    <a asp-action="CambiarSerie">Cambiar Personaje de serie</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSerie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreSerie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Puntuacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSerie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreSerie)
+            </td>
+            <td>
+                <img src="@item.Imagen" style="width:150px;height:150px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Puntuacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdSerie }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdSerie }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdSerie }) |
+                @Html.ActionLink("Personajes", "PersonajesSerie", new { id = item.IdSerie })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

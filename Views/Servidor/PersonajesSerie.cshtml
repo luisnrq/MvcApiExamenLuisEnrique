@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MvcApiExamenLuisEnrique.Models.Personaje>
+
+@{
+    ViewData["Title"] = "PersonajesSerie";
+}
+
+<h1>Personajes Serie</h1>
+
+<p>
+    <a asp-action="Index">Volver al listado de series</a> |
+    <a asp-action="CreatePersonajeSerie">Crear Personaje</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPersonaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombrePersonaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSerie)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPersonaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombrePersonaje)
+            </td>
+            <td>
+                <img src="@item.Imagen" style="width:150px;height:150px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSerie)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "EditPersonaje", new { id = item.IdPersonaje }) |
+                @Html.ActionLink("Detalles", "DetailsPersonaje", new { id = item.IdPersonaje }) |
+                @Html.ActionLink("Eliminar", "DeletePersonaje", new { id = item.IdPersonaje }) |
+                @Html.ActionLink("Cambiar Serie", "CambiarSerie", new { id = item.IdPersonaje })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

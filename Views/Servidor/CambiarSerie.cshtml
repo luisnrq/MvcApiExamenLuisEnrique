@@ -1,0 +1,27 @@
+﻿
+@{ 
+    List<Serie> series = (List<Serie>)ViewData["SERIES"];
+    List<Personaje> personajes = (List<Personaje>)ViewData["PERSONAJES"];
+}
+
+<h1>Cambiar personaje serie</h1>
+<a asp-action="Index">Vovler al listado</a>
+
+<form method="post">
+    <label>Selecciona una serie</label>
+    <select name="serie" class="form-control">
+        @foreach (Serie serie in series)
+        {
+            <option value="@serie.IdSerie">@serie.NombreSerie</option>
+        }
+    </select>
+    <label>Selecciona un Personaje:</label>
+    <select name="personaje" class="form-control">
+        @foreach (Personaje personaje in personajes)
+        {
+            <option value="@personaje.IdPersonaje">@personaje.NombrePersonaje</option>
+        }
+    </select>
+    <br />
+    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+</form>

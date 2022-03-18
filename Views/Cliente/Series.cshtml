@@ -1,0 +1,142 @@
+﻿
+
+@section scripts{
+    <script>
+        var urlApi = "https://apiexamenluisenriquefrias.azurewebsites.net/";
+        $(document).ready(function () {
+            cargarSeries();
+
+            $("#botondelete").click(function () {
+                var idserie = $("#idSerie").val();
+                var request = "api/series/" + idserie;
+                $.ajax({
+                    url: urlApi + request,
+                    type: "DELETE",
+                    success: function () {
+                        cargarSeries();
+                    }
+                });
+            });
+
+            $("#botoninsert").click(function () {
+                var idserie = 0;
+                var nombreSerie = $("#nombreSerie").val();
+                var imagen = $("#imagen").val();
+                var puntuacion = $("#puntuacion").val();
+                var anio = $("#anio").val();
+
+                var serie = new Object();
+                serie.idSerie = idserie;
+                serie.nombreSerie = nombreSerie;
+                serie.imagen = imagen;
+                serie.puntuacion = puntuacion;
+                serie.anio = anio;
+
+                var json = JSON.stringify(serie);
+                var request = "/api/series";
+
+                $.ajax({
+                    url: urlApi + request
+                    , type: "POST"
+                    , data: json
+                    , contentType: "application/json"
+                    , success: function () {
+                        cargarSeries();
+                    }
+                });
+            });
+
+            $("#botonupdate").click(function () {
+                var idserie = parseInt($("#idSerie").val());
+                var nombreSerie = $("#nombreSerie").val();
+                var imagen = $("#imagen").val();
+                var puntuacion = $("#puntuacion").val();
+                var anio = parseInt($("#anio").val());
+
+                var serie = new Object();
+                serie.idSerie = idserie;
+                serie.nombreSerie = nombreSerie;
+                serie.imagen = imagen;
+                serie.puntuacion = puntuacion;
+                serie.anio = anio;
+
+                var json = JSON.stringify(serie);
+                var request = "/api/series";
+
+                $.ajax({
+                    url: urlApi + request
+                    , type: "PUT"
+                    , data: json
+                    , contentType: "application/json"
+                    , success: function () {
+                        cargarSeries();
+                    }
+                });
+            });
+
+            function cargarSeries() {
+                var htmla = "<tr><td colspan='5'>Cargando...</td></tr>";
+                $("#tableSeries tbody").html(htmla);
+                var request = "/api/series";
+                $.ajax({
+                    url: urlApi + request,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        var html = "";
+                        $.each(data, function (index, serie) {
+                            html += "<tr>";
+                            html += "<td>" + serie.idSerie + "</td>";
+                            html += "<td>" + serie.nombreSerie + "</td>";
+                            html += "<td><img src='" + serie.imagen +"' style='width:150px;height:150px' /> </td>";
+                            html += "<td>" + serie.puntuacion + "</td>";
+                            html += "<td>" + serie.anio + "</td>";
+                            html += "</tr>";
+                        });
+                        $("#tableSeries tbody").html(html);
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+<h1 class="text-center">Cliente Api Crud Series</h1>
+
+
+
+<div class="text-center">
+    <label>Id Serie: </label>
+    <input type="number" id="idSerie" class="form-control" />
+    <br />
+    <label>Nombre: </label>
+    <input type="text" id="nombreSerie" class="form-control" />
+    <br />
+    <label>Imagen: </label>
+    <input type="text" id="imagen" class="form-control" />
+    <br />
+    <label>Puntuación: </label>
+    <input type="number" id="puntuacion" class="form-control" />
+    <br />
+    <label>Año: </label>
+    <input type="number" id="anio" class="form-control" />
+    <br />
+
+    <button id="botoninsert" class="btn btn-success">Insert</button>
+    <button id="botonupdate" class="btn btn-info">Update</button>
+    <button id="botondelete" type="button" class="btn btn-danger" value="5">Delete</button>
+    <br />
+    <br />
+    <table class="table table-warning" id="tableSeries">
+        <thead>
+            <tr>
+                <th>IdSerie</th>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Puntuación</th>
+                <th>Año</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
